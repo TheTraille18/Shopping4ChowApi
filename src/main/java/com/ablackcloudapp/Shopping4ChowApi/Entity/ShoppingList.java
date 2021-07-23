@@ -19,10 +19,7 @@ public class ShoppingList {
     private String username;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="food_id")
-    private Food food;
+    @JoinColumn(name="ingredient_id")
+    private Ingredient ingredient;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="spice_id")
-    private Spice spice;
 }
