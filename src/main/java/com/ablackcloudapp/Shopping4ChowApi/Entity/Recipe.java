@@ -4,39 +4,62 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@Table(name="recipes")
+@Table(name="recipe")
 public class Recipe {
 
     @Id
-    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private int id;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "meal_id")
+    private Meal meal;
 
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
-    private List<Ingredients> ingredients;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name="ingredient_id")
+    private Ingredient ingredient;
 
-    @Column(name="pic_id")
-    private String pic_id;
+    @Column(name="amount")
+    private int amount;
 
-    @Column(name="recipe_text")
-    private String recipe_text;
+    @Column(name="units")
+    private Unit units;
 
-    @Column(name="website")
-    private String website;
-
-    public Recipe(){
-
-    }
-
-    public Recipe(String name){
-        this.name = name;
+    public enum Unit {
+        none,
+        each,
+        peice,
+        bag,
+        bottle,
+        box,
+        pack,
+        jar,
+        can,
+        bunch,
+        roll,
+        dozen,
+        small,
+        large,
+        lbs,
+        qt,
+        oz,
+        cup,
+        gallon,
+        tbsp,
+        tsp,
+        g,
+        kg,
+        liter,
+        milliliter,
+        pis
     }
 }
+
