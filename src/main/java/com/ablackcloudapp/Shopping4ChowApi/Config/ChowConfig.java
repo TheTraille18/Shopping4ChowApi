@@ -1,5 +1,8 @@
 package com.ablackcloudapp.Shopping4ChowApi.Config;
 
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +22,16 @@ public class ChowConfig {
     String username = System.getenv("S4C_USERnAME");
     String password = System.getenv("S4C_PASSWORD");
     String url = "jdbc:postgresql://" + host + ":5432/" + database + "?useSSL=false";
+
+    @Bean
+    public AmazonS3 s3client(){
+        AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                //.withCredentials(new AWSStaticCredentialsProvider(credentials))
+                .withRegion(Regions.US_EAST_1)
+                .build();
+        return s3Client;
+    }
+
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -52,7 +65,7 @@ public class ChowConfig {
     private final Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty(
-                "hibernate.hbm2ddl.auto", "create-drop");
+                "hibernate.hbm2ddl.auto", "create");
         //hibernateProperties.setProperty(
         //        "hibernate.dialect", "org.hibernate.dialect.PostgreSQL9Dialect");
         hibernateProperties.setProperty(
