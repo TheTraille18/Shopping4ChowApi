@@ -18,6 +18,10 @@ public class IngredientServiceImpl implements iIngredientService {
         return ingredients;
     }
 
+    public void removeIngredient(int ingredientId){
+        ingredientDaoImpl.removeIngredient(ingredientId);
+    }
+
     @Override
     public List<Ingredient> getAllIngredients() {
         List<Ingredient> ingredients = ingredientDaoImpl.getAllIngredients();

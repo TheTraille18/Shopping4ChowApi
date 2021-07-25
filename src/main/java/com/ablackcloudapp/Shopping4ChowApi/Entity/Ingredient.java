@@ -36,6 +36,11 @@ public class Ingredient {
     public Ingredient(String name){
         this.name = name;
     }
+
+    //Used for removing request
+    public Ingredient(int id){
+        this.id = id;
+    }
     public Ingredient(String name, MultipartFile ingredientPicFile){
         this.name = name;
         this.ingredientPicFile = ingredientPicFile;

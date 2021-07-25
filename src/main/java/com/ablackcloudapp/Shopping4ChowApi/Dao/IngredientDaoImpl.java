@@ -4,6 +4,7 @@ import com.ablackcloudapp.Shopping4ChowApi.Entity.Ingredient;
 import com.amazonaws.services.s3.AmazonS3;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -43,6 +44,20 @@ public class IngredientDaoImpl implements iIngredientDao {
             Boolean delete = tempFile.delete();
         }
 
+    }
+
+    public void removeIngredient(int ingredientId){
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tr = session.beginTransaction();
+        System.out.println("Removing ingreients " + ingredientId);
+        //Query query = session.createQuery("delete from Ingredient where id=:ingredientId");
+        //query.setParameter("ingredientId", ingredientId);
+        String env = getEnvironment();
+        Ingredient ingredient = session.get(Ingredient.class, ingredientId);
+        s3Client.deleteObject("shopping4chow.com",env + ingredient.getName());
+        session.remove(ingredient);
+        tr.commit();
+        //query.executeUpdate();
     }
 
     @Override

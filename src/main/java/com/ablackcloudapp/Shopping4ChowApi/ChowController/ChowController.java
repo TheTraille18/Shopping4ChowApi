@@ -29,6 +29,14 @@ public class ChowController {
     }
 
     @ResponseBody
+    @PostMapping("removeIngredient")
+    public String removeIngredient(@RequestBody Ingredient ingredient){
+        System.out.println("Id: " + ingredient.getId());
+        ingredientService.removeIngredient(ingredient.getId());
+        return "";
+    }
+
+    @ResponseBody
     @GetMapping("allingredients")
     public List<Ingredient> getAllIngredients(){
         List<Ingredient> ingredients = ingredientService.getAllIngredients();

@@ -1,5 +1,6 @@
 package com.ablackcloudapp.Shopping4ChowApi.Config;
 
+import com.ablackcloudapp.Shopping4ChowApi.Entity.Ingredient;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -38,7 +39,7 @@ public class ChowConfig {
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan("com.ablackcloudapp.Shopping4ChowApi.Entity");
         sessionFactory.setHibernateProperties(hibernateProperties());
-
+        sessionFactory.setAnnotatedClasses(Ingredient.class);
         return sessionFactory;
     }
 
